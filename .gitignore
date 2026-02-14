@@ -1,6 +1,12 @@
-server
-steamcmd
-resources
 .gitignore
+
+server/*
+steamcmd/*
+resources/*
+
 !/server/game/csgo/mecz.json
 !/resources/server.cfg
+!/resources/admins.json
+!/steamcmd/cs2-updater.txt
+# Ignore all other files in the server and steamcmd directories 
+# except for the specified ones above.
