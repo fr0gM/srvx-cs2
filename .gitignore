@@ -8,5 +8,6 @@ resources/*
 !/resources/server.cfg
 !/resources/admins.json
 !/steamcmd/cs2-updater.txt
+!/steamcmd/steamcmd.exe
 # Ignore all other files in the server and steamcmd directories 
 # except for the specified ones above.
