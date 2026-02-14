@@ -1,3 +1,6 @@
 server
 steamcmd
-# Ignore all files in the server directory
+resources
+.gitignore
+!/server/game/csgo/mecz.json
+!/resources/server.cfg
