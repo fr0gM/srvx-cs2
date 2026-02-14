@@ -6,7 +6,7 @@
 
 # 2. Uruchomienie serwera
 
--.\server\game\bin\win64\cs2.exe -dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_setsteamaccount XX +sv_logfile 1 -maxplayers 16
+- .\server\game\bin\win64\cs2.exe -dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_setsteamaccount XX +sv_logfile 1 -maxplayers 16
 
 ## Zaladowanie meczu
 - matchzy_loadmatch mecz.json
