@@ -1,20 +1,20 @@
 # 1. Instalacja/Upgrade Servera
-git pull https://github.com/fr0gM/srvx-cs2
-.\steamcmd\steamcmd +runscript cs2-updater.txt
-. .\Install-CS2ServerResources.ps1 
+- git pull https://github.com/fr0gM/srvx-cs2
+- .\steamcmd\steamcmd +runscript cs2-updater.txt
+- . .\Install-CS2ServerResources.ps1 
 
 
 # 2. Uruchomienie serwera
 
-.\server\game\bin\win64\cs2.exe -dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_setsteamaccount XX +sv_logfile 1 -maxplayers 16
+-.\server\game\bin\win64\cs2.exe -dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_setsteamaccount XX +sv_logfile 1 -maxplayers 16
 
 ## Zaladowanie meczu
-matchzy_loadmatch mecz.json
+- matchzy_loadmatch mecz.json
 
 
 ## Restart meczu w trakcie
-css_endmatch
-css_restart
+- css_endmatch
+- css_restart
 
 
 
