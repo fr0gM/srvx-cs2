@@ -14,7 +14,7 @@ $CSGOAddonsPath = Join-Path $CSGOPath "addons"
 $GameInfoPath = Join-Path $CSGOPath "gameinfo.gi"
 
 Write-Host "Installing Metamod" -ForegroundColor Cyan
-if((Test-Path $CSGOAddonsPath\m)) {
+if((Test-Path $CSGOAddonsPath\metamod)) {
     Write-Host "Metamod already exists. Skipping download and installation." -ForegroundColor Yellow
 }
 else {

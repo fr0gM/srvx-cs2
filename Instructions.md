@@ -1,26 +1,25 @@
-Invoke-WebRequest https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip -OutFile .\steamcmd.zip    
-Expand-Archive .\steamcmd.zip
-cd steamcmd
-.\steamcmd +force_install_dir E:\CS2\Server +login anonymous +app_update 730 +quit
-
+# 1. Instalacja/Upgrade Servera
+git pull https://github.com/fr0gM/srvx-cs2
 .\steamcmd\steamcmd +runscript cs2-updater.txt
 . .\Install-CS2ServerResources.ps1 
 
 
+# 2. Uruchomienie serwera
 
 .\server\game\bin\win64\cs2.exe -dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_setsteamaccount XX +sv_logfile 1 -maxplayers 16
 
-
+## Zaladowanie meczu
 matchzy_loadmatch mecz.json
 
+
+## Restart meczu w trakcie
 css_endmatch
-
-
 css_restart
 
 
 
-                    
+
+# 3. Dodatowe info o pluginach
 -------------------
 ## metamod
 https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1387-windows.zip
