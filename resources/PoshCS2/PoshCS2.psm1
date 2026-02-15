@@ -104,6 +104,13 @@ function Install-PoshCS2-ServerResources {
     Write-Host "admins.json copied successfully." -ForegroundColor Green
 
 }
+function Update-PoshCS2-Server {
+    param (
+        [string]$SteamCMDPath = "E:\CS2\steamcmd\steamcmd.exe"
+    )
+    & $SteamCMDPath +runscript cs2-updater.txt
+}
+
 function Start-PoshCS2-Server {
     param (          
         $ServerPath = "E:\CS2\server\game\bin\win64\cs2.exe",
@@ -155,7 +162,7 @@ function Send-PoshCS2-Command {
     & $RconPath -a $ConfFile.default.address -p $ConfFile.default.password "$Command $Argument"
 }                                         
 
-function Start-PoshCS2-Match {
+function Load-PoshCS2-Match {
     param (
         [Parameter(Mandatory = $true)]
         [ArgumentCompleter({
@@ -163,9 +170,17 @@ function Start-PoshCS2-Match {
                 Get-ChildItem "E:\CS2\server\game\csgo\*.json" | Select-Object -ExpandProperty Name
             })
         ] 
-        [string]$MatchFile
+        [string]$MatchFile,
+        [switch]$Force
     )
     Send-PoshCS2-Command -Command "matchzy_loadmatch" -Argument $MatchFile
+
+    if ($Force) {
+        Send-PoshCS2-Command -Command "css_start"
+    }
+}
+
+function Start-PoshCS2-Match {
     Send-PoshCS2-Command -Command "css_start"
 }
 

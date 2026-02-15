@@ -1,19 +1,24 @@
 # 1. Instalacja/Upgrade Servera
 - git pull https://github.com/fr0gM/srvx-cs2
-- .\steamcmd\steamcmd +runscript cs2-updater.txt
-- . .\Install-CS2ServerResources.ps1 
-
+- Import-Module .\resources\PoshCS2\PoshCS2.psm1 -Verbose
+- Update-PoshCS2-Server
+- Install-PoshCS2-ServerResources -Force
+  
 # 2. Uruchomienie serwera
-- .\server\game\bin\win64\cs2.exe -dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_setsteamaccount XX +sv_logfile 1 -maxplayers 16
+- Start-PoshCS2-Server
+- Stop-PoshCS2-Server
+- Restart-PoshCS2-Server
 
 ## Zaladowanie meczu
-- matchzy_loadmatch mecz.json
-
-
+- Load-PoshCS2-Match mecz.json
+- Load-PoshCS2-Match mecz.json -Force
+- Start-PoshCS2-Match
+  
 ## Restart meczu w trakcie
-- css_endmatch
-- css_restart
-
+- Stop-PoshCS2-Match
+- Restart-PoshCS2-Match
+- Pause-PoshCS2-Match
+- Resume-PoshCS2-Match
 
 # 3. Dodatowe info o pluginach
 -------------------
