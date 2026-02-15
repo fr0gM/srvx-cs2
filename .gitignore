@@ -4,11 +4,15 @@ server/*
 steamcmd/*
 resources/*
 
+
 !/server/game/csgo/mecz.json
+!/resources/PoshCS2
 !/resources/server.cfg
+!/resources/config.cfg
 !/resources/admins.json
 !/resources/secrets-example.cfg
 !/resources/rcon-example.json
+!/resources/mecz-example.json
 !/steamcmd/cs2-updater.txt
 !/steamcmd/steamcmd.exe
 # Ignore all other files in the server and steamcmd directories 
