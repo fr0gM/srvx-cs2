@@ -1,6 +1,6 @@
 param (
     [string]$ServerPath = 'E:\CS2\server',
-    [bool]$Force = $false
+    [switch]$Force
 )
 
 $ErrorActionPreference = "Stop"
@@ -89,6 +89,10 @@ else {
 Write-Host "Copy Server.cfg" -ForegroundColor Cyan
 Copy-Item -Path "E:\CS2\resources\server.cfg" -Destination "$CSGOPath\cfg\server.cfg" -Force
 Write-Host "Server.cfg copied successfully." -ForegroundColor Green
+
+Write-Host "Copy secrets.cfg" -ForegroundColor Cyan
+Copy-Item -Path "E:\CS2\resources\secrets.cfg" -Destination "$CSGOPath\cfg\secrets.cfg" -Force
+Write-Host "secrets.cfg copied successfully." -ForegroundColor Green
 
 Write-Host "Copy admins.json" -ForegroundColor Cyan
 Copy-Item -Path "E:\CS2\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\admins.json" -Force
