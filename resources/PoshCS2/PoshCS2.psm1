@@ -139,7 +139,7 @@ function Restart-PoshCS2-Server {
 function Send-PoshCS2-Command {
     param (
         [Parameter(Mandatory = $true)]
-        [ValidateSet("matchzy_loadmatch", "matchzy_listbackups", "matchzy_loadbackup", "css_start", "css_forcepause", "css_forceunpause", "css_endmatch", 'css_asay', 'mp_terminate_match')]
+        [ValidateSet("matchzy_loadmatch", "matchzy_listbackups", "matchzy_loadbackup", "css_start", "css_forcepause", "css_forceunpause", "css_endmatch", 'css_asay', 'mp_terminate_match', 'host_workshop_map')]
         [string]$Command,
         [string]$Argument = $null
     )
@@ -148,7 +148,8 @@ function Send-PoshCS2-Command {
         'matchzy_loadmatch',
         'matchzy_loadbackup',
         'mp_terminate_match',
-        'say'
+        'css_asay',
+        'host_workshop_map'
     )
 
     if ($Command -in $CommandsRequiringArgument -and [string]::IsNullOrWhiteSpace($Argument)) {
@@ -162,6 +163,14 @@ function Send-PoshCS2-Command {
 
     & $RconPath -a $ConfFile.default.address -p $ConfFile.default.password "$Command $Argument"
 }                                         
+
+function Setup-PoshCS2-WorkshopMap {
+    param (
+        [validateSet("3666804634")]
+        [String]$WorkshopId
+    )
+    Send-PoshCS2-Command -Command "host_workshop_map" -Argument $WorkshopId
+}
 
 function Load-PoshCS2-Match {
     param (
