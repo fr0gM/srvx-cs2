@@ -3,9 +3,7 @@
 - .\steamcmd\steamcmd +runscript cs2-updater.txt
 - . .\Install-CS2ServerResources.ps1 
 
-
 # 2. Uruchomienie serwera
-
 - .\server\game\bin\win64\cs2.exe -dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_setsteamaccount XX +sv_logfile 1 -maxplayers 16
 
 ## Zaladowanie meczu
@@ -15,8 +13,6 @@
 ## Restart meczu w trakcie
 - css_endmatch
 - css_restart
-
-
 
 
 # 3. Dodatowe info o pluginach

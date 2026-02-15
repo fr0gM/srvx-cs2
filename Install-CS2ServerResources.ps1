@@ -97,3 +97,7 @@ Write-Host "secrets.cfg copied successfully." -ForegroundColor Green
 Write-Host "Copy admins.json" -ForegroundColor Cyan
 Copy-Item -Path "E:\CS2\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\admins.json" -Force
 Write-Host "admins.json copied successfully." -ForegroundColor Green
+
+Write-Host "Import Powershel RCON tools" -ForegroundColor Cyan
+Import-Module "E:\CS2\CS2-ServerCmdlets.ps1"
+Write-Host "Powershel RCON tools imported successfully." -ForegroundColor Green
