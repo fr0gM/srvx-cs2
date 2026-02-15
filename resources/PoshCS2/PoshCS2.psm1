@@ -139,7 +139,7 @@ function Restart-PoshCS2-Server {
 function Send-PoshCS2-Command {
     param (
         [Parameter(Mandatory = $true)]
-        [ValidateSet("matchzy_loadmatch", "matchzy_listbackups", "matchzy_loadbackup", "css_start", "css_pause", "css_unpause", "css_endmatch", 'css_asay')]
+        [ValidateSet("matchzy_loadmatch", "matchzy_listbackups", "matchzy_loadbackup", "css_start", "css_forcepause", "css_forceunpause", "css_endmatch", 'css_asay', 'mp_terminate_match')]
         [string]$Command,
         [string]$Argument = $null
     )
@@ -147,6 +147,7 @@ function Send-PoshCS2-Command {
     $CommandsRequiringArgument = @(
         'matchzy_loadmatch',
         'matchzy_loadbackup',
+        'mp_terminate_match',
         'say'
     )
 
@@ -185,18 +186,21 @@ function Start-PoshCS2-Match {
 }
 
 function Stop-PoshCS2-Match {
+    param (
+        [switch]$Confirm
+    )
     Send-PoshCS2-Command -Command "css_endmatch"
 }
-
+#FIX ME
 function Pause-PoshCS2-Match {
-    Send-PoshCS2-Command -Command "css_pause"
+    Send-PoshCS2-Command -Command "css_forcepause"
+}
+#FIX ME
+function Unpause-PoshCS2-Match {
+    Send-PoshCS2-Command -Command "css_forceunpause"
 }
 
-function Unpause-PoshCS2-Match {
-    Send-PoshCS2-Command -Command "css_unpause"
-}
-`
-    function Get-PoshCS2-RoundBackups {
+function Get-PoshCS2-RoundBackups {
     return (Get-ChildItem "E:\CS2\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name)
 }
 
@@ -213,7 +217,6 @@ function Restore-PoshCS2-Round {
     Send-PoshCS2-Command -Command "matchzy_loadbackup" -Argument $BackupFile
 }
 function Send-Posh2CS-Message {
-    # Parameter help description
     param(
         [String]
         $Message
