@@ -4,12 +4,11 @@ function Start-CS2-Server {
         $Port = 27015,
         $TVPort = 27020,
         $Map = "de_mirage",
-        $SteamAccount = "XX",
         $LogFile = 1,
         $MaxPlayers = 16
     )
 
-    & $ServerPath -dedicated -usercon -console -port $Port +tv_port $TVPort +map $Map +sv_setsteamaccount $SteamAccount +sv_logfile $LogFile -maxplayers $MaxPlayers
+    & $ServerPath -dedicated -usercon -console -port $Port +tv_port $TVPort +map $Map +sv_logfile $LogFile -maxplayers $MaxPlayers
 
 }
 function Stop-CS2-Server {

@@ -1,0 +1,9 @@
+{
+  "default": {
+    "address": "IP:27015",
+    "password": "",
+    "log": "rcon-default.log",
+    "type": "",
+    "timeout": "10s"
+  }
+}
