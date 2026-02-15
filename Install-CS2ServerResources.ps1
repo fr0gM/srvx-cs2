@@ -1,5 +1,6 @@
 param (
-    [string]$ServerPath='E:\CS2\server'
+    [string]$ServerPath = 'E:\CS2\server',
+    [bool]$Force = $false
 )
 
 $ErrorActionPreference = "Stop"
@@ -14,10 +15,12 @@ $CSGOAddonsPath = Join-Path $CSGOPath "addons"
 $GameInfoPath = Join-Path $CSGOPath "gameinfo.gi"
 
 Write-Host "Installing Metamod" -ForegroundColor Cyan
-if((Test-Path $CSGOAddonsPath\metamod)) {
+if (((Test-Path $CSGOAddonsPath\metamod) -and !$Force)) {
+    # If force is not enabled and metamod exists, skip download and installation
     Write-Host "Metamod already exists. Skipping download and installation." -ForegroundColor Yellow
 }
 else {
+    # Download and install metamod
     Invoke-WebRequest $MetamodDownloadUrl -OutFile E:\CS2\resources\metamod.zip
     Expand-Archive -Path E:\CS2\resources\metamod.zip -DestinationPath $CSGOPath -Force 
     Write-Host "Metamod Installed" -ForegroundColor Green
@@ -60,20 +63,24 @@ else {
 }
 
 Write-Host "Installing CounterStrikeSharp Runtime" -ForegroundColor Cyan
-if(Test-Path $CSGOAddonsPath\cs2sharp) {
+if ((Test-Path $CSGOAddonsPath\counterstrikesharp) -and !$Force) {
+    # If force is not enabled and counterstrikesharp exists, skip download and installation
     Write-Host "CounterStrikeSharp Runtime already exists. Skipping download and installation." -ForegroundColor Yellow
 }
 else {
+    # Download and install counterstrikesharp
     Invoke-WebRequest $CounterStrikeSharpDownloadUrl -OutFile E:\CS2\resources\cs2sharp-runtime.zip
     Expand-Archive -Path E:\CS2\resources\cs2sharp-runtime.zip -DestinationPath $CSGOPath  -Force
     Write-Host "CounterStrikeSharp Runtime Installed" -ForegroundColor Green
 }
 
 Write-Host "Installing MatchZy" -ForegroundColor Cyan
-if(Test-Path $CSGOAddonsPath\MatchZy) {
+if ((Test-Path $CSGOAddonsPath\counterstrikesharp\plugins\MatchZy) -and !$Force) {
+    # If force is not enabled and MatchZy exists, skip download and installation
     Write-Host "MatchZy already exists. Skipping download and installation." -ForegroundColor Yellow
 }
 else {
+    # Download and install MatchZy
     Invoke-WebRequest $MatchZyDownloadUrl -OutFile E:\CS2\resources\MatchZy.zip
     Expand-Archive -Path E:\CS2\resources\MatchZy.zip -DestinationPath $CSGOPath -Force
     Write-Host "MatchZy Installed" -ForegroundColor Green
