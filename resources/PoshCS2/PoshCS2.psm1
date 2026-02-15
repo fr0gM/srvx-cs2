@@ -87,20 +87,20 @@ function Install-PoshCS2-ServerResources {
         Write-Host "MatchZy Installed" -ForegroundColor Green
     }
 
-    Write-Host "Copy Server.cfg" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\server.cfg" -Destination "$CSGOPath\cfg\server.cfg" -Force
+    Write-Host "Copy Server.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
+    Copy-Item -Path "E:\CS2\resources\server.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "Server.cfg copied successfully." -ForegroundColor Green
 
-    Write-Host "Copy config.cfg" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\server.cfg" -Force
+    Write-Host "Copy config.cfg to path: $("$CSGOPath\cfg\MatchZy\")" -ForegroundColor Cyan
+    Copy-Item -Path "E:\CS2\resources\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\" -Force -Verbose
     Write-Host "config.cfg copied successfully." -ForegroundColor Green
  
-    Write-Host "Copy secrets.cfg" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\secrets.cfg" -Destination "$CSGOPath\cfg\secrets.cfg" -Force
+    Write-Host "Copy secrets.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
+    Copy-Item -Path "E:\CS2\resources\secrets.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "secrets.cfg copied successfully." -ForegroundColor Green
 
-    Write-Host "Copy admins.json" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\admins.json" -Force
+    Write-Host "Copy admins.json to path: $("$CSGOPath\addons\counterstrikesharp\configs\")" -ForegroundColor Cyan
+    Copy-Item -Path "E:\CS2\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\" -Force -Verbose
     Write-Host "admins.json copied successfully." -ForegroundColor Green
 
 }
