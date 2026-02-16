@@ -114,11 +114,11 @@ function Update-PoshCS2-Server {
     if ($ComputerName) {
         Invoke-Command -ComputerName $ComputerName -ScriptBlock {
             param($sp)
-            & $sp +force_install_dir $ServerPath +login anonymous +app_update 730 +quit
+            & $sp +force_install_dir $ServerPath +login anonymous +app_update 730 validate +quit
         } -ArgumentList $SteamCMDPath
     }
     else {
-        & $SteamCMDPath +force_install_dir $ServerPath +login anonymous +app_update 730 +quit
+        & $SteamCMDPath +force_install_dir $ServerPath +login anonymous +app_update 730 validate +quit
 
     }
 
