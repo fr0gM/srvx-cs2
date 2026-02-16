@@ -1,10 +1,71 @@
-function Install-PoshCS2-ServerResources {
-    param (
-        [string]$ServerPath = 'E:\CS2\server',
-        [switch]$Force
+$script:PoshCS2Config = @{
+    ServersJsonPath = 'E:\CS2\resources\servers.json'
+    RconJsonPath    = 'E:\CS2\resources\rcon.json'
+    ServersJson     = $null
+    Active          = $null
+}
+
+function Import-PoshCS2-Variables {
+    param(
+        [Parameter(Position = 0)]
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+            
+                $ServersJsonPath = $script:PoshCS2Config.ServersJsonPath
+                if (Test-Path $ServersJsonPath) {
+                    $ServersJson = Get-Content -Path $ServersJsonPath | ConvertFrom-Json
+                    $ServersJson.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                }
+            })]
+        [string]$Name,
+
+        [string]$ServersJsonPath = $script:PoshCS2Config.ServersJsonPath
     )
     
+    # Update the module-scoped path if provided
+    if ($PSBoundParameters.ContainsKey('ServersJsonPath')) {
+        $script:PoshCS2Config.ServersJsonPath = $ServersJsonPath
+    }
+    
+    # Load and cache the servers configuration
+    $script:PoshCS2Config.ServersJson = Get-Content -Path $script:PoshCS2Config.ServersJsonPath | ConvertFrom-Json
 
+    # Set active profile
+    if ($Name -and $script:PoshCS2Config.ServersJson.$Name) {
+        $script:PoshCS2Config.Active = $script:PoshCS2Config.ServersJson.$Name
+    }
+    else {
+        # Fallback to first profile if not specified or not found
+        $FirstProfileName = $script:PoshCS2Config.ServersJson.PSObject.Properties.Name[0]
+        $script:PoshCS2Config.Active = $script:PoshCS2Config.ServersJson.$FirstProfileName
+    }
+
+    return $script:PoshCS2Config.Active
+}
+
+# Helper function to ensure configuration is loaded
+function Test-PoshCS2Config {
+    if ($null -eq $script:PoshCS2Config.Active) {
+        Write-Warning "PoshCS2 active configuration is not loaded. Attempting to load default..."
+        Import-PoshCS2-Variables > $null
+        if ($null -eq $script:PoshCS2Config.Active) {
+            throw "PoshCS2 configuration could not be loaded. Please verify '$($script:PoshCS2Config.ServersJsonPath)' exists and is valid."
+        }
+    }
+    else {
+        Write-Host "PoshCS2 configuration is loaded." -ForegroundColor Green
+        Write-Host "Active Profile: $($script:PoshCS2Config.Active)" -ForegroundColor Green  
+    }
+}
+
+function Install-PoshCS2-ServerResources {
+    param (
+        [string]$ServerPath = $script:PoshCS2Config.Active.ServerPath,
+        [switch]$Force
+    )
+    Test-PoshCS2Config
+
+ 
     $ErrorActionPreference = "Stop"
 
     $MetamodDownloadUrl = "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1384-windows.zip"
@@ -23,11 +84,11 @@ function Install-PoshCS2-ServerResources {
     }
     else {
         # Download and install metamod
-        Invoke-WebRequest $MetamodDownloadUrl -OutFile E:\CS2\resources\metamod.zip
-        Expand-Archive -Path E:\CS2\resources\metamod.zip -DestinationPath $CSGOPath -Force 
+        Invoke-WebRequest $MetamodDownloadUrl -OutFile "$($script:PoshCS2Config.Active.ServerPath)\resources\metamod.zip"
+        Expand-Archive -Path "$($script:PoshCS2Config.Active.ServerPath)\resources\metamod.zip" -DestinationPath $CSGOPath -Force 
         Write-Host "Metamod Installed" -ForegroundColor Green
     }
-
+    
     Write-Host "Activating Metamod in gameinfo.gi..." -ForegroundColor Cyan
     $FileLines = Get-Content $GameInfoPath
     # Check if already installed
@@ -89,28 +150,30 @@ function Install-PoshCS2-ServerResources {
     }
 
     Write-Host "Copy Server.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\server.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\server.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "Server.cfg copied successfully." -ForegroundColor Green
 
     Write-Host "Copy config.cfg to path: $("$CSGOPath\cfg\MatchZy\")" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\" -Force -Verbose
     Write-Host "config.cfg copied successfully." -ForegroundColor Green
  
     Write-Host "Copy secrets.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\secrets.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\secrets.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "secrets.cfg copied successfully." -ForegroundColor Green
 
     Write-Host "Copy admins.json to path: $("$CSGOPath\addons\counterstrikesharp\configs\")" -ForegroundColor Cyan
-    Copy-Item -Path "E:\CS2\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\" -Force -Verbose
     Write-Host "admins.json copied successfully." -ForegroundColor Green
 
 }
 function Update-PoshCS2-Server {
     param (
-        [string]$SteamCMDPath = "E:\CS2\steamcmd\steamcmd.exe",
-        [string]$ServerPath = "E:\CS2\Server",
+        [string]$SteamCMDPath = $script:PoshCS2Config.Active.SteamCMDPath,
+        [string]$ServerPath = $script:PoshCS2Config.Active.ServerPath,
         [string]$ComputerName = $null
     )
+    Test-PoshCS2Config
+
     if ($ComputerName) {
         Invoke-Command -ComputerName $ComputerName -ScriptBlock {
             param($sp)
@@ -127,7 +190,7 @@ function Update-PoshCS2-Server {
 
 function Start-PoshCS2-Server {
     param (          
-        $ServerPath = "E:\CS2\server\game\bin\win64\cs2.exe",
+        $ServerPath = $script:PoshCS2Config.Active.ServerExecutablePath,
         $Port = 27015,
         $TVPort = 27020,
         $Map = "de_mirage",
@@ -188,9 +251,14 @@ function Restart-PoshCS2-Server {
 
 function Get-PoshCS2-RconProfile {
     param (
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
         [string]$Target = "default"
     )
-    $ConfFile = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+    $ConfFile = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
     $RconProfile = $ConfFile.$Target
     if (-not $RconProfile) {
         $AvailableProfiles = ($ConfFile.PSObject.Properties | Select-Object -ExpandProperty Name) -join ', '
@@ -207,14 +275,23 @@ function Send-PoshCS2-Command {
         [string]$Argument = $null,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default",
         [string]$Address = $null,
         [PSCredential]$Password = $null 
     )
-
+    $ConfFile = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
+    $RconProfile = $ConfFile.$Target
+    if (-not $RconProfile) {
+        $AvailableProfiles = ($ConfFile.PSObject.Properties | Select-Object -ExpandProperty Name) -join ', '
+        Throw "RCON profile '$Target' not found in rcon.json. Available profiles: $AvailableProfiles"
+    }
+    $RconAddress = $RconProfile.address
+    $RconPassword = $RconProfile.password
+    $RconPath = $script:PoshCS2Config.Active.RconPath
+    
     $CommandsRequiringArgument = @(
         'matchzy_loadmatch',
         'matchzy_loadbackup',
@@ -242,7 +319,7 @@ function Send-PoshCS2-Command {
     }
 
     # Point this to where you saved rcon.exe
-    $RconPath = "E:\CS2\resources\rcon.exe"
+    $RconPath = $script:PoshCS2Config.Active.RconPath
 
     & $RconPath -a $RconAddress -p $RconPassword "$Command $Argument"
 }                                         
@@ -251,20 +328,20 @@ function Get-PoshCS2-Status {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
     )
-    $Status = Send-PoshCS2-Command -Command "status" -Target $Target
+    Send-PoshCS2-Command -Command "status" -Target $Target
 }
-function Setup-PoshCS2-WorkshopMap {
+function Initialize-PoshCS2-WorkshopMap {
     param (
         [validateSet("3666944764", '3663186989', '3643838992')]
         [String]$WorkshopId,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
@@ -272,19 +349,18 @@ function Setup-PoshCS2-WorkshopMap {
     Send-PoshCS2-Command -Command "host_workshop_map" -Argument $WorkshopId -Target $Target
 }
 
-function Load-PoshCS2-Match {
+function Import-PoshCS2-Match {
     param (
         [Parameter(Mandatory = $true)]
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                Get-ChildItem "E:\CS2\server\game\csgo\*.json" | Select-Object -ExpandProperty Name
-            })
-        ] 
+                Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\server\game\csgo\*.json" | Select-Object -ExpandProperty Name
+            })]
         [string]$MatchFile,
         [switch]$Force,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
@@ -300,7 +376,7 @@ function Start-PoshCS2-Match {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
@@ -313,31 +389,31 @@ function Stop-PoshCS2-Match {
         [switch]$Confirm,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json   
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
     )
     Send-PoshCS2-Command -Command "css_endmatch" -Target $Target
 }
-#FIX ME
-function Pause-PoshCS2-Match {
+
+function Suspend-PoshCS2-Match {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
     )
     Send-PoshCS2-Command -Command "css_forcepause" -Target $Target
 }
-#FIX ME
-function Unpause-PoshCS2-Match {
+
+function Resume-PoshCS2-Match {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
@@ -346,7 +422,15 @@ function Unpause-PoshCS2-Match {
 }
 
 function Get-PoshCS2-RoundBackups {
-    return (Get-ChildItem "E:\CS2\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name)
+    param (
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
+    )   
+    return (Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name)
 }
 
 function Restore-PoshCS2-Round {
@@ -354,14 +438,13 @@ function Restore-PoshCS2-Round {
         [Parameter(Mandatory = $true)]
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                Get-ChildItem "E:\CS2\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name
+                Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name
             })
         ] 
         [string]$BackupFile,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name
             })]
         [string]$Target = "default"
     )
@@ -373,11 +456,15 @@ function Send-Posh2CS-Message {
         $Message,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
                 $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
             })]
         [string]$Target = "default"
     )
     Send-PoshCS2-Command -Command "css_asay" -Argument $Message -Target $Target
 }
+
+# Initialize variables on module load
+Import-PoshCS2-Variables -Name "local"
+
 Export-ModuleMember -Function *
