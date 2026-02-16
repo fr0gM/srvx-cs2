@@ -3,6 +3,7 @@ function Install-PoshCS2-ServerResources {
         [string]$ServerPath = 'E:\CS2\server',
         [switch]$Force
     )
+    
 
     $ErrorActionPreference = "Stop"
 
@@ -106,9 +107,18 @@ function Install-PoshCS2-ServerResources {
 }
 function Update-PoshCS2-Server {
     param (
-        [string]$SteamCMDPath = "E:\CS2\steamcmd\steamcmd.exe"
+        [string]$SteamCMDPath = "E:\CS2\steamcmd\steamcmd.exe",
+        [string]$ComputerName = $null
     )
-    & $SteamCMDPath +runscript cs2-updater.txt
+    if ($ComputerName) {
+        Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+            param($sp)
+            & $sp +runscript cs2-updater.txt
+        } -ArgumentList $SteamCMDPath
+    }
+    else {
+        & $SteamCMDPath +runscript cs2-updater.txt
+    }
 }
 
 function Start-PoshCS2-Server {
@@ -118,30 +128,87 @@ function Start-PoshCS2-Server {
         $TVPort = 27020,
         $Map = "de_mirage",
         $LogFile = 1,
-        $MaxPlayers = 16
+        $MaxPlayers = 16,
+        [string]$ComputerName = $null
     )
-    & $ServerPath -dedicated -usercon -console -port $Port +tv_port $TVPort +map $Map +sv_logfile $LogFile -maxplayers $MaxPlayers
+    if ($ComputerName) {
+        Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+            param($sp, $p, $tvp, $m, $lf, $mp)
+            & $sp -dedicated -usercon -console -port $p +tv_port $tvp +map $m +sv_logfile $lf -maxplayers $mp
+        } -ArgumentList $ServerPath, $Port, $TVPort, $Map, $LogFile, $MaxPlayers
+    }
+    else {
+        & $ServerPath -dedicated -usercon -console -port $Port +tv_port $TVPort +map $Map +sv_logfile $LogFile -maxplayers $MaxPlayers
+    }
+    Start-Sleep -Seconds 5
+    Get-PoshCS2-Status
 }
 function Stop-PoshCS2-Server {
-    $Processes = Get-CimInstance Win32_Process -Filter "Name LIKE 'cs2%'"
-    foreach ($Process in $Processes) {
-        if ($Process.CommandLine -like "*-dedicated*") {
-            Stop-Process -Id $Process.ProcessId -Force
-            Write-Host "Stopped CS2 Dedicated Server (PID: $($Process.ProcessId))" -ForegroundColor Yellow
+    param (
+        [string]$ComputerName = $null
+    )
+    if ($ComputerName) {
+        Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+            $Processes = Get-CimInstance Win32_Process -Filter "Name LIKE 'cs2%'"
+            foreach ($Process in $Processes) {
+                if ($Process.CommandLine -like "*-dedicated*") {
+                    Stop-Process -Id $Process.ProcessId -Force
+                    Write-Host "Stopped CS2 Dedicated Server (PID: $($Process.ProcessId))" -ForegroundColor Yellow
+                }
+            }
+        }
+    }
+    else {
+        $Processes = Get-CimInstance Win32_Process -Filter "Name LIKE 'cs2%'"
+        foreach ($Process in $Processes) {
+            if ($Process.CommandLine -like "*-dedicated*") {
+                Stop-Process -Id $Process.ProcessId -Force
+                Write-Host "Stopped CS2 Dedicated Server (PID: $($Process.ProcessId))" -ForegroundColor Yellow
+            }
         }
     }
 }
 function Restart-PoshCS2-Server {
-    Stop-PoshCS2-Server
-    Start-PoshCS2-Server
+    param (
+        [string]$ComputerName = $null
+    )
+    if ($ComputerName) {
+        Stop-PoshCS2-Server -ComputerName $ComputerName
+        Start-PoshCS2-Server -ComputerName $ComputerName
+    }
+    else {
+        Stop-PoshCS2-Server
+        Start-PoshCS2-Server
+    }
+}
+
+function Get-PoshCS2-RconProfile {
+    param (
+        [string]$Target = "default"
+    )
+    $ConfFile = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+    $RconProfile = $ConfFile.$Target
+    if (-not $RconProfile) {
+        $AvailableProfiles = ($ConfFile.PSObject.Properties | Select-Object -ExpandProperty Name) -join ', '
+        Throw "RCON profile '$Target' not found in rcon.json. Available profiles: $AvailableProfiles"
+    }
+    return $RconProfile
 }
 
 function Send-PoshCS2-Command {
     param (
         [Parameter(Mandatory = $true)]
-        [ValidateSet("matchzy_loadmatch", "matchzy_listbackups", "matchzy_loadbackup", "css_start", "css_forcepause", "css_forceunpause", "css_endmatch", 'css_asay', 'mp_terminate_match', 'host_workshop_map')]
+        [ValidateSet("matchzy_loadmatch", "matchzy_listbackups", "matchzy_loadbackup", "css_start", "css_forcepause", "css_forceunpause", "css_endmatch", 'css_asay', 'mp_terminate_match', 'host_workshop_map', 'status')]
         [string]$Command,
-        [string]$Argument = $null
+        [string]$Argument = $null,
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default",
+        [string]$Address = $null,
+        [PSCredential]$Password = $null 
     )
 
     $CommandsRequiringArgument = @(
@@ -156,20 +223,49 @@ function Send-PoshCS2-Command {
         Throw "The command '$Command' requires an argument."
     }
 
-    $ConfFile = Get-content E:\cs2\resources\rcon.json | ConvertFrom-Json
+    # Resolve address and password: inline overrides take priority over profiles
+    if ($Address -and $Password) {
+        $RconAddress = $Address
+        $RconPassword = $Password.GetNetworkCredential().Password
+    }
+    elseif ($Address -or $Password) {
+        Throw "Both -Address and -Password must be provided together for inline override."
+    }
+    else {
+        $RconProfile = Get-PoshCS2-RconProfile -Target $Target
+        $RconAddress = $RconProfile.address
+        $RconPassword = $RconProfile.password
+    }
 
     # Point this to where you saved rcon.exe
     $RconPath = "E:\CS2\resources\rcon.exe"
 
-    & $RconPath -a $ConfFile.default.address -p $ConfFile.default.password "$Command $Argument"
+    & $RconPath -a $RconAddress -p $RconPassword "$Command $Argument"
 }                                         
 
+function Get-PoshCS2-Status {
+    param (
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
+    )
+    $Status = Send-PoshCS2-Command -Command "status" -Target $Target
+}
 function Setup-PoshCS2-WorkshopMap {
     param (
-        [validateSet("3666804634")]
-        [String]$WorkshopId
+        [validateSet("3666944764", '3663186989', '3643838992')]
+        [String]$WorkshopId,
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
     )
-    Send-PoshCS2-Command -Command "host_workshop_map" -Argument $WorkshopId
+    Send-PoshCS2-Command -Command "host_workshop_map" -Argument $WorkshopId -Target $Target
 }
 
 function Load-PoshCS2-Match {
@@ -181,32 +277,68 @@ function Load-PoshCS2-Match {
             })
         ] 
         [string]$MatchFile,
-        [switch]$Force
+        [switch]$Force,
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
     )
-    Send-PoshCS2-Command -Command "matchzy_loadmatch" -Argument $MatchFile
+    Send-PoshCS2-Command -Command "matchzy_loadmatch" -Argument $MatchFile -Target $Target
 
     if ($Force) {
-        Send-PoshCS2-Command -Command "css_start"
+        Send-PoshCS2-Command -Command "css_start" -Target $Target
     }
 }
 
 function Start-PoshCS2-Match {
-    Send-PoshCS2-Command -Command "css_start"
+    param (
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
+    )
+    Send-PoshCS2-Command -Command "css_start" -Target $Target
 }
 
 function Stop-PoshCS2-Match {
     param (
-        [switch]$Confirm
+        [switch]$Confirm,
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
     )
-    Send-PoshCS2-Command -Command "css_endmatch"
+    Send-PoshCS2-Command -Command "css_endmatch" -Target $Target
 }
 #FIX ME
 function Pause-PoshCS2-Match {
-    Send-PoshCS2-Command -Command "css_forcepause"
+    param (
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
+    )
+    Send-PoshCS2-Command -Command "css_forcepause" -Target $Target
 }
 #FIX ME
 function Unpause-PoshCS2-Match {
-    Send-PoshCS2-Command -Command "css_forceunpause"
+    param (
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
+    )
+    Send-PoshCS2-Command -Command "css_forceunpause" -Target $Target
 }
 
 function Get-PoshCS2-RoundBackups {
@@ -221,15 +353,27 @@ function Restore-PoshCS2-Round {
                 Get-ChildItem "E:\CS2\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name
             })
         ] 
-        [string]$BackupFile
+        [string]$BackupFile,
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
     )
-    Send-PoshCS2-Command -Command "matchzy_loadbackup" -Argument $BackupFile
+    Send-PoshCS2-Command -Command "matchzy_loadbackup" -Argument $BackupFile -Target $Target
 }
 function Send-Posh2CS-Message {
     param(
         [String]
-        $Message
+        $Message,
+        [ArgumentCompleter({
+                param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
+                $conf = Get-Content E:\CS2\resources\rcon.json | ConvertFrom-Json
+                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+            })]
+        [string]$Target = "default"
     )
-    Send-PoshCS2-Command -Command "css_asay" -Argument $Message
+    Send-PoshCS2-Command -Command "css_asay" -Argument $Message -Target $Target
 }
 Export-ModuleMember -Function *

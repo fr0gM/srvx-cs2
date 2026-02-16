@@ -1,0 +1,370 @@
+Steam AppId(730), BreakpadId(2347771)
+InitSteamLogin_Internal: Initializing breakpad.
+Steam Universe is invalid, possibly asking before Steam was successfully initialized.
+ResetBreakpadAppId: Universe is 0 (k_EUniverseInvalid)
+ResetBreakpadAppId: Setting dedicated server app id: 2347773
+Visibility enabled.
+USRLOCAL path not found!
+Trying to set dxlevel (111) which is higher than the card can support (110)!
+---------------
+Path ID:             File Path:
+ADDONS               "E:\CS2\server\game\csgo_addons\" 
+CONTENT              "E:\CS2\server\content\csgo\addons\metamod\" 
+CONTENT              "E:\CS2\server\content\csgo\" 
+CONTENT              "E:\CS2\server\content\csgo_imported\" 
+CONTENT              "E:\CS2\server\content\csgo_core\" 
+CONTENT              "E:\CS2\server\content\core\" 
+CONTENTADDONS        "E:\CS2\server\content\csgo_addons\" 
+CONTENTROOT          "E:\CS2\server\content\" 
+DEFAULT_WRITE_PATH   "E:\CS2\server\game\csgo\addons\metamod\" 
+EXECUTABLE_PATH      "E:\CS2\server\game\bin\win64\" 
+EXECUTABLE_PATH      "E:\CS2\server\game\bin\" 
+GAME                 "E:\CS2\server\game\csgo\pak01.vpk" (vpk) E:\CS2\server\game\csgo\pak01.vpk
+GAME                 "E:\CS2\server\game\csgo_imported\pak01.vpk" (vpk) E:\CS2\server\game\csgo_imported\pak01.vpk
+GAME                 "E:\CS2\server\game\csgo_core\pak01.vpk" (vpk) E:\CS2\server\game\csgo_core\pak01.vpk
+GAME                 "E:\CS2\server\game\core\pak01.vpk" (vpk) E:\CS2\server\game\core\pak01.vpk
+GAME                 "E:\CS2\server\game\csgo\shaders_pc.vpk" (vpk) E:\CS2\server\game\csgo\shaders_pc.vpk
+GAME                 "E:\CS2\server\game\csgo_core\shaders_pc.vpk" (vpk) E:\CS2\server\game\csgo_core\shaders_pc.vpk
+GAME                 "E:\CS2\server\game\core\shaders_pc.vpk" (vpk) E:\CS2\server\game\core\shaders_pc.vpk
+GAME                 "E:\CS2\server\game\csgo\addons\metamod\" 
+GAME                 "E:\CS2\server\game\csgo\" 
+GAME                 "E:\CS2\server\game\csgo_imported\" 
+GAME                 "E:\CS2\server\game\csgo_core\" 
+GAME                 "E:\CS2\server\game\core\" 
+GAMEBIN              "E:\CS2\server\game\csgo\addons\metamod\bin\win64\" 
+GAMEBIN              "E:\CS2\server\game\csgo\addons\metamod\bin\" 
+GAMEBIN              "E:\CS2\server\game\csgo\bin\win64\" 
+GAMEBIN              "E:\CS2\server\game\csgo\bin\" 
+GAMEBIN              "E:\CS2\server\game\csgo_imported\bin\win64\" 
+GAMEBIN              "E:\CS2\server\game\csgo_imported\bin\" 
+GAMEBIN              "E:\CS2\server\game\csgo_core\bin\win64\" 
+GAMEBIN              "E:\CS2\server\game\csgo_core\bin\" 
+GAMEBIN              "E:\CS2\server\game\core\bin\win64\" 
+GAMEBIN              "E:\CS2\server\game\core\bin\" 
+GAMEROOT             "E:\CS2\server\game\" 
+MOD                  "E:\CS2\server\game\csgo\pak01.vpk" (vpk) E:\CS2\server\game\csgo\pak01.vpk
+MOD                  "E:\CS2\server\game\csgo_imported\pak01.vpk" (vpk) E:\CS2\server\game\csgo_imported\pak01.vpk
+MOD                  "E:\CS2\server\game\csgo_core\pak01.vpk" (vpk) E:\CS2\server\game\csgo_core\pak01.vpk
+MOD                  "E:\CS2\server\game\csgo\" 
+MOD                  "E:\CS2\server\game\csgo_imported\" 
+MOD                  "E:\CS2\server\game\csgo_core\" 
+OFFICIAL_ADDONS      "E:\CS2\server\game\csgo_community_addons\" 
+PLATFORM             "E:\CS2\server\game\core\pak01.vpk" (vpk) E:\CS2\server\game\core\pak01.vpk
+PLATFORM             "E:\CS2\server\game\core\" 
+SHADER_SOURCE        "E:\CS2\server\src\shaders\csgo\addons\metamod\" 
+SHADER_SOURCE        "E:\CS2\server\src\shaders\csgo\" 
+SHADER_SOURCE        "E:\CS2\server\src\shaders\csgo_imported\" 
+SHADER_SOURCE        "E:\CS2\server\src\shaders\csgo_core\" 
+SHADER_SOURCE        "E:\CS2\server\src\shaders\core\" 
+SHADER_SOURCE        "E:\CS2\server\src\shaders\csgo_community_addons\" 
+SHADER_SOURCE_MOD    "E:\CS2\server\src\shaders\csgo\addons\metamod\" 
+SHADER_SOURCE_ROOT   "E:\CS2\server\src\shaders\" 
+command line arguments:
+-dedicated -usercon -console -port 27015 +tv_port 27020 +map de_mirage +sv_logfile 1 -maxplayers 16
+Network System Initialized
+MOD desires lightbinner GPU but is unsupported by HW (SupportsCompute=0 CubeMapArrays=0)
+Physics Console Communications is not initialized
+GameTypes: missing mapgroupsSP entry for game type/mode (custom/custom).
+GameTypes: missing mapgroupsSP entry for game type/mode (cooperative/cooperative).
+GameTypes: missing mapgroupsSP entry for game type/mode (cooperative/coopmission).
+RTTI Type Descriptor RVA: 0x0000000001CE1C28
+17:56:29 [INFO] (cssharp:Core) CounterStrikeSharp is starting up...
+17:56:29 [INFO] (cssharp:CoreConfig) Successfully loaded core configuration
+17:56:29 [INFO] (cssharp:GameDataProvider) Successfully loaded 45 game data entries from E:\CS2\server\game\csgo\addons\counterstrikesharp\gamedata\gamedata.json
+17:56:29 [INFO] (cssharp:Core) Loading Admins from E:\CS2\server\game\csgo\addons\counterstrikesharp\configs\admins.json
+17:56:29 [INFO] (cssharp:AdminManager) Loaded admin data with 1 admins.
+17:56:29 [INFO] (cssharp:Core) Loading Admin Groups from E:\CS2\server\game\csgo\addons\counterstrikesharp\configs\admin_groups.json
+Admin groups file not found. Skipping admin groups load.
+17:56:29 [INFO] (cssharp:Core) Loading Admin Command Overrides from E:\CS2\server\game\csgo\addons\counterstrikesharp\configs\admin_overrides.json
+Admin command overrides file not found. Skipping admin command overrides load.
+17:56:29 [INFO] (cssharp:PluginContext) Loading plugin MatchZy
+[MatchZy] [ADMIN] Username: 76561198154367261, Role: 
+[MatchZy] [InitializeDatabase] SQLite Database connection successful
+[MatchZy] [InitializeDatabase] Table matchzy_stats_matches created (or already exists)
+[MatchZy] [InitializeDatabase] Table matchzy_stats_players created (or already exists)
+[MatchZy] [InitializeDatabase] Table matchzy_stats_maps created (or already exists)
+[MatchZy] [AutoStart] autoStartMode: 1
+[MatchZy] [StartWarmup] Starting warmup! Executing Warmup CFG from MatchZy/warmup.cfg
+[MatchZy 0.8.15 LOADED] MatchZy by WD- (https://github.com/shobhit-pathak/)
+17:56:29 [INFO] (cssharp:PluginContext) Finished loading plugin MatchZy
+[META] Loaded 1 plugin.
+Event System loaded 94 events from file: vpk:E:/CS2/server/game/core/pak01.vpk:resource/core.gameevents.
+Event System loaded 50 events from file: vpk:E:/CS2/server/game/csgo/pak01.vpk:resource/game.gameevents.
+Event System loaded 145 events from file: vpk:E:/CS2/server/game/csgo/pak01.vpk:./resource/mod.gameevents.
+CEntitySystem::BuildEntityNetworking (parallel build of server) took 20.725 msecs for 209 out of 290 classes
+[STARTUP] {1.292} server module init ok
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\CounterStrikeSharp.API.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2691000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Runtime.dll - Access violation at 00007FFAA15277EC accessing 0000012C4A881000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Hosting.Abstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012C4A891000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.DependencyInjection.Abstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012C4A8A1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Hosting.dll - Access violation at 00007FFAA15277EC accessing 0000012C4A8C1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Serilog.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B031000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.Abstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B061000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.DependencyInjection.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B071000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Diagnostics.Tracing.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B091000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.dll - Access violation at 00007FFAA15277EC accessing 0000012C47CB1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.EnvironmentVariables.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B0B1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.CommandLine.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B0C1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Primitives.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B0D1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.FileProviders.Abstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B0E1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.FileProviders.Physical.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B0F1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.FileExtensions.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B111000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.Json.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B121000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.UserSecrets.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B131000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Configuration.Binder.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B141000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.FileSystemGlobbing.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B151000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Threading.Overlapped.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B161000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\Microsoft.Win32.Primitives.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2851000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Options.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2881000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Logging.dll - Access violation at 00007FFAA15277EC accessing 0000012C4B0A1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Diagnostics.dll - Access violation at 00007FFAA15277EC accessing 0000012CE28A1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Logging.Abstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012CE28B1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Diagnostics.Abstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012CE28D1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Logging.Configuration.dll - Access violation at 00007FFAA15277EC accessing 0000012CE28E1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Logging.Debug.dll - Access violation at 00007FFAA15277EC accessing 0000012CE28F1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Logging.EventSource.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2901000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Logging.EventLog.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2911000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Logging.Console.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2921000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Options.ConfigurationExtensions.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2941000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.Localization.Abstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012C4A831000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Scrutor.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2961000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Serilog.Extensions.Logging.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2981000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Serilog.Sinks.Console.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2991000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Serilog.Sinks.File.dll - Access violation at 00007FFAA15277EC accessing 0000012CE29A1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.IO.FileSystem.dll - Access violation at 00007FFAA15277EC accessing 0000012CE29B1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Reflection.Emit.Lightweight.dll - Access violation at 00007FFAA15277EC accessing 0000012CE29C1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Reflection.Emit.ILGeneration.dll - Access violation at 00007FFAA15277EC accessing 0000012CE29D1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Reflection.Primitives.dll - Access violation at 00007FFAA15277EC accessing 0000012CE29E1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Threading.ThreadPool.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2861000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Text.Encoding.Extensions.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2951000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Runtime.Intrinsics.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2A01000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Numerics.Vectors.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2A91000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Runtime.Loader.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2A71000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\McMaster.NETCore.Plugins.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2A81000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Runtime.Extensions.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2AB1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Tomlyn.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2AC1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.Extensions.DependencyModel.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2AF1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Threading.Thread.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B11000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Xml.XDocument.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B21000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Resources.ResourceManager.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B31000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Diagnostics.Debug.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B41000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Runtime.InteropServices.RuntimeInformation.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B51000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Threading.Tasks.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B61000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\Microsoft.DotNet.PlatformAbstractions.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B71000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\netstandard.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2B81000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Buffers.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2BA1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Diagnostics.Contracts.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2BB1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Runtime.Serialization.Xml.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2BC1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Runtime.Serialization.Json.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2BD1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Xml.ReaderWriter.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2BE1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Xml.XmlSerializer.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2BF1000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\dotnet\shared\Microsoft.NETCore.App\8.0.3\System.Xml.XPath.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2C01000.
+Could not PreloadLibrary E:\CS2\server\game\csgo\addons\counterstrikesharp\api\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll - Access violation at 00007FFAA15277EC accessing 0000012CE2C11000.
+CHostStateMgr::QueueNewRequest( Idle (console), 1 )
+Source2Init OK
+HostStateRequest::Start(HSR_IDLE):  loop(console) id(1) addons() desc(Idle (console))
+SwitchToLoop console requested:  id [1] addons []
+Host activate: Idle (console)
+Loading map "de_mirage"
+CHostStateMgr::QueueNewRequest( Loading (de_mirage), 2 )
+execing MatchZy/config.cfg
+execing MatchZy/warmup.cfg
+[MatchZy] Minimum ready players required to start the match are now set to: 2
+[MatchZy] [MatchZyChatPrefix] chatPrefix: [WinterSplit2026]
+[MatchZy] [MatchZyAdminChatPrefix] adminChatPrefix: [ADMIN]
+mp_t_default_primary = 
+HostStateRequest::Start(HSR_GAME):  loop(levelload) id(2) addons() desc(Loading (de_mirage))
+SwitchToLoop levelload requested:  id [2] addons []
+SV:  Level loading started for 'de_mirage'
+CL:  CLoopModeLevelLoad::MaybeSwitchToGameLoop switching to "game" loopmode with addons ()
+SwitchToLoop game requested:  id [2] addons []
+SteamGameServer_Init()
+Steam Universe valid after having been requested when invalid.  Universe is now 1
+ResetBreakpadAppId: Universe is 1 (k_EUniversePublic)
+ResetBreakpadAppId: Setting dedicated server app id: 2347773
+SteamGameServer_Init() OK, logging on to Steam
+****************************************************
+*                                                  *
+*  No Steam account token was specified.           *
+*  Logging into anonymous game server account.     *
+*  Connections will be restricted to LAN only.     *
+*                                                  *
+*  To create a game server account go to           *
+*  http://steamcommunity.com/dev/managegameservers *
+*                                                  *
+****************************************************
+CNetworkSystem::InitGameServer: SteamGameServerNetworking() OK
+Initialized low level socket/threading support.
+Set SteamNetworkingSockets P2P_STUN_ServerList to '' as per SteamNetworkingSocketsSerialized
+CNetworkGameServerBase::SetServerState (ss_dead -> ss_waitingforgamesessionmanifest)
+SV:  maxplayers set to 16
+Created poll group for socket 'server'
+SDR RelayNetworkStatus:  avail=Attempting  config=Attempting  anyrelay=Not Attempted   (Attempt #1 to fetch config (only-if-cached) from https://api.steampowered.com/ISteamApps/GetSDRConfig/v1?appid=730)
+AuthStatus (invalid):  Waiting  (Waiting for Steam login)
+Network socket 'server' opened on port 27015
+Initializing CSGO VScript Game System
+SV:  Executing server defaults
+SV:  Executing dedicated server config file
+[STARTUP] {1.795} created game rules
+GameTypes: could not find matching game mode value of "" in any game type.
+SV:  CGameRulesGameSystem::GameInit installed game rules
+CPlayerVoiceListener::GameInit()
+LoadResponseSystem scripts/talker/response_rules.vrr - Start
+CResponseSystem:  scripts/talker/response_rules.vrr (7681 rules, 811 criteria, and 7681 responses)
+LoadResponseSystem scripts/talker/response_rules.vrr - Finish
+Entry player was not found in surfaceproperties_footsteps.txt
+execing server_default.cfg
+execing server.cfg
+execing gamemode_competitive.cfg
+exec: couldn't exec '{*}cfg/gamemode_competitive_server.cfg', unable to read file
+execing secrets.cfg
+Unknown command 'mp_weapons_glow_on_ground'!
+Unknown command 'sv_gameinstructor_enable'!
+Got SDR network config.  Loaded revision 1770318170 OK
+SDR RelayNetworkStatus:  avail=Not Attempted  config=OK  anyrelay=Not Attempted   (No need for SDR client network access)
+Model models/props/crates/csgo_drop_crate_armsdeal2.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_bravo.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_winteroffensive.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_armsdeal3.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_phoenix.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_huntsman.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_breakout.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_vanguard.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_chroma.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_chroma2.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_bloodhound.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_shadow.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_revolver.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_chroma3.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_25.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_30.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_26.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_spectrum.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_horizon.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_31.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_27.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_32.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_28.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_dangerzone.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_spectrum2.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_29.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_22.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_glove.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_23.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_gamma.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_gamma2.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_community_24.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_armsdeal1.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_wildfire.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_clutch.vmdl: sequence/animation name collision found "tools_preview"
+Model models/props/crates/csgo_drop_crate_hydra.vmdl: sequence/animation name collision found "tools_preview"
+C:\buildworker\csgo_rel_win64\build\src\rendersystem\texturebase.cpp(3480):ResourceHandleToData( maps/de_mirage/lightmaps/direct_light_shadows.vtex ) failed! Falling back to error texture!
+C:\buildworker\csgo_rel_win64\build\src\rendersystem\texturebase.cpp(3480):ResourceHandleToData( maps/de_mirage/lightmaps/irradiance.vtex ) failed! Falling back to error texture!
+C:\buildworker\csgo_rel_win64\build\src\rendersystem\texturebase.cpp(3480):ResourceHandleToData( maps/de_mirage/lightmaps/directional_irradiance.vtex ) failed! Falling back to error texture!
+CWorldRendererMgr::ServiceWorldRequests long frame: 17.589735ms
+SV:  Spawn Server: de_mirage
+CSource2Server::ApplyGameSettings game settings payload received:
+  ::ExecGameTypeCfg {
+    map {
+      mapname de_mirage
+    }
+    launchoptions {
+      levelname de_mirage
+      mode dedicated
+      loadmap int( 1 = 0x1 )
+      changelevel int( 0 = 0x0 )
+      map de_mirage
+      mapgroup 
+      requires_attr 
+      requires_attr_value int( -1 = 0xFFFFFFFF )
+      requires_attr_reward 
+      reward_drop_list int( -1 = 0xFFFFFFFF )
+      numSlots int( 10 = 0xA )
+      c_game_type int( 0 = 0x0 )
+      c_game_mode int( 1 = 0x1 )
+      default_game_type int( 0 = 0x0 )
+      default_game_mode int( 0 = 0x0 )
+      ct_arms models/weapons/ct_arms_sas.vmdl
+      t_arms models/weapons/t_arms_leet.vmdl
+      ct_models {
+         ctm_sas
+         ctm_sas_variantA
+         ctm_sas_variantB
+         ctm_sas_variantC
+         ctm_sas_variantD
+      }
+      t_models {
+         tm_leet_variantA
+         tm_leet_variantB
+         tm_leet_variantC
+         tm_leet_variantD
+         tm_leet_variantE
+      }
+    }
+  }
+CNetworkGameServerBase::SetServerState (ss_waitingforgamesessionmanifest -> ss_loading)
+Failed loading resource "maps/prefabs/misc/terrorist_team_intro_variant2/world_visibility.vvis_c" (ERROR_FILEOPEN: File not found)
+C:\buildworker\csgo_rel_win64\build\src\rendersystem\texturebase.cpp(3480):ResourceHandleToData( maps/prefabs/de_mirage/3dskybox_mirage_legacy/lightmaps/direct_light_shadows.vtex ) failed! Falling back to error texture!
+C:\buildworker\csgo_rel_win64\build\src\rendersystem\texturebase.cpp(3480):ResourceHandleToData( maps/prefabs/de_mirage/3dskybox_mirage_legacy/lightmaps/irradiance.vtex ) failed! Falling back to error texture!
+C:\buildworker\csgo_rel_win64\build\src\rendersystem\texturebase.cpp(3480):ResourceHandleToData( maps/prefabs/de_mirage/3dskybox_mirage_legacy/lightmaps/directional_irradiance.vtex ) failed! Falling back to error texture!
+CNetworkGameServerBase::SetServerState (ss_loading -> ss_active)
+SV:  IGameSystem::LoopActivateAllSystems {
+HO:  IGameSystem::LoopActivateAllSystems {
+HO:  } IGameSystem::LoopActivateAllSystems done
+SV:  } IGameSystem::LoopActivateAllSystems done
+Created physics for de_mirage
+CNavGenParams - Nav mesh requests project default generation parameters but actual parameters
+  used during construction differ from defaults. Please re-export the map.
+CNavGenParams - Nav mesh requests project default generation parameters but actual parameters
+  used during construction differ from defaults. Please re-export the map.
+CNavGenParams - Nav mesh requests project default generation parameters but actual parameters
+  used during construction differ from defaults. Please re-export the map.
+CNavGenParams - Nav mesh requests project default generation parameters but actual parameters
+  used during construction differ from defaults. Please re-export the map.
+SV:  16 player server started
+CSource2Server::GameServerSteamAPIActivated()
+CNetworkGameServerBase::SetServerState (ss_dead -> ss_waitingforgamesessionmanifest)
+HLTV:maxplayers set to 16
+Created poll group for socket 'hltv'
+Network socket 'hltv' opened on port 27020
+Starting SourceTV server listening on port 0, type non-relay
+ClientPutInServer create new player controller [SourceTV]
+[SourceTV] cl_interp_ratio='', LerpTime=0
+Start Primary SourceTV Client: Auto-Recording demo
+ClientPutInServer create new player controller [Kev]
+[Kev] cl_interp_ratio='', LerpTime=0
+"Kev<1><BOT><Unassigned>" ChangeTeam() CTMDBG , team 0, req team 2 willSwitch 0, 1.12 
+ClientPutInServer create new player controller [Maximus]
+[Maximus] cl_interp_ratio='', LerpTime=0
+"Maximus<2><BOT><Unassigned>" ChangeTeam() CTMDBG , team 0, req team 3 willSwitch 0, 1.12 
+Host activate: Loading (de_mirage)
+"Winter Split TV<0><BOT><Unassigned>" OnPreResetRound => CTMDBG, team 0  will switch 0 1.14 
+"Kev<1><BOT><TERRORIST>" OnPreResetRound => CTMDBG, team 2  will switch 0 1.14 
+"Maximus<2><BOT><CT>" OnPreResetRound => CTMDBG, team 3  will switch 0 1.14 
+Using spawn points configuration 0xE277F515
+SourceTV[0] broadcast active.
+CHLTVServerAsync::ExecuteDelayedCall StartAutoRecordingCall_t with start tick == 0
+Recording SourceTV replay to replays/auto-20260215-1756-de_mirage-Counter-Strike_2.dem...
+playdemo replays/auto-20260215-1756-de_mirage-Counter-Strike_2.dem
+SV:  Connection to Steam servers successful.
+SV:  ServerSteamID=[A:1:1666199573:48812] (90281640157261845).
+[STARTUP] {2.861} logged on to Steam
+Gameserver logged on to Steam, assigned identity steamid:90281640157261845
+AuthStatus (steamid:90281640157261845):  Attempting  (Requesting cert)
+Set SteamNetworkingSockets P2P_STUN_ServerList to '162.254.197.54:3478' as per SteamNetworkingSocketsSerialized
+SV:  VAC secure mode is activated.
+AuthStatus (steamid:90281640157261845):  OK  (OK)
+Certificate expires in 48h00m at 1771347391 (current time 1771174591), will renew in 46h00m
+GC Connection established for server version 2000730, instance idx 1
+[STARTUP] {3.300} activated session on GC
+[MatchZy] [AutoStart] autoStartMode: 1
+[MatchZy] [StartWarmup] Starting warmup! Executing Warmup CFG from MatchZy/warmup.cfg
+execing MatchZy/warmup.cfg
+Kev kicked by Console (NETWORK_DISCONNECT_KICKED)
+Maximus kicked by Console (NETWORK_DISCONNECT_KICKED)
+SV: Convar 'sv_infinite_ammo' is cheat protected, change ignored.
+mp_t_default_primary = 
+"Winter Split TV<0><BOT><Unassigned>" OnPreResetRound => CTMDBG, team 0  will switch 0 2.12 
+"Kev<1><STEAM_ID_PENDING><TERRORIST>" OnPreResetRound => CTMDBG, team 2  will switch 0 2.12 
+"Maximus<2><STEAM_ID_PENDING><CT>" OnPreResetRound => CTMDBG, team 3  will switch 0 2.12 
+Using spawn points configuration 0xE277F515
