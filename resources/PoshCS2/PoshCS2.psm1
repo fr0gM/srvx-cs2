@@ -1,4 +1,4 @@
-$script:PoshCS2Config = @{
+﻿$script:PoshCS2Config = @{
     ServersJsonPath = 'E:\CS2\resources\servers.json'
     RconJsonPath    = 'E:\CS2\resources\rcon.json'
     ServersJson     = $null
@@ -11,13 +11,12 @@ function Import-PoshCS2-Variables {
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
             
-                $ServersJsonPath = $script:PoshCS2Config.ServersJsonPath
-                if (Test-Path $ServersJsonPath) {
-                    $ServersJson = Get-Content -Path $ServersJsonPath | ConvertFrom-Json
-                    $ServersJson.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $path = $script:PoshCS2Config.ServersJsonPath
+                if (Test-Path $path) {
+                    $json = Get-Content -Raw -Path $path | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
                 }
-            })]
-        [string]$Name,
+            })]$Name,
 
         [string]$ServersJsonPath = $script:PoshCS2Config.ServersJsonPath
     )
@@ -253,8 +252,13 @@ function Get-PoshCS2-RconProfile {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
@@ -275,8 +279,13 @@ function Send-PoshCS2-Command {
         [string]$Argument = $null,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default",
         [string]$Address = $null,
@@ -328,8 +337,13 @@ function Get-PoshCS2-Status {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
@@ -341,8 +355,13 @@ function Initialize-PoshCS2-WorkshopMap {
         [String]$WorkshopId,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
@@ -354,14 +373,22 @@ function Import-PoshCS2-Match {
         [Parameter(Mandatory = $true)]
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\server\game\csgo\*.json" | Select-Object -ExpandProperty Name
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $searchPath = Join-Path $serverPath "server\game\csgo\*.json"
+                Get-ChildItem -Path $searchPath | Where-Object { $_.Name -like "$wordToComplete*" } | Select-Object -ExpandProperty Name
             })]
         [string]$MatchFile,
         [switch]$Force,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
@@ -376,8 +403,13 @@ function Start-PoshCS2-Match {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
@@ -401,8 +433,13 @@ function Suspend-PoshCS2-Match {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
@@ -413,8 +450,13 @@ function Resume-PoshCS2-Match {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
@@ -425,8 +467,13 @@ function Get-PoshCS2-RoundBackups {
     param (
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )   
@@ -444,7 +491,10 @@ function Restore-PoshCS2-Round {
         [string]$BackupFile,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $searchPath = Join-Path $serverPath "server\game\csgo\MatchZyDataBackup\*"
+                Get-ChildItem -Path $searchPath | Where-Object { $_.Name -like "$wordToComplete*" } | Select-Object -ExpandProperty Name
             })]
         [string]$Target = "default"
     )
@@ -456,8 +506,13 @@ function Send-Posh2CS-Message {
         $Message,
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-                $conf = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
-                $conf.PSObject.Properties.Name | Where-Object { $_ -like "$wordToComplete*" }
+                $serverPath = $script:PoshCS2Config.Active.ServerPath
+                if (-not $serverPath) { $serverPath = "E:\CS2" }
+                $rconPath = Join-Path $serverPath "resources\rcon.json"
+                if (Test-Path $rconPath) {
+                    $json = Get-Content -Raw -Path $rconPath | ConvertFrom-Json
+                    $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
+                }
             })]
         [string]$Target = "default"
     )
