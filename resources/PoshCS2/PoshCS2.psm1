@@ -108,17 +108,21 @@ function Install-PoshCS2-ServerResources {
 function Update-PoshCS2-Server {
     param (
         [string]$SteamCMDPath = "E:\CS2\steamcmd\steamcmd.exe",
+        [string]$ServerPath = "E:\CS2\Server",
         [string]$ComputerName = $null
     )
     if ($ComputerName) {
         Invoke-Command -ComputerName $ComputerName -ScriptBlock {
             param($sp)
-            & $sp +runscript cs2-updater.txt
+            & $sp +force_install_dir $ServerPath +login anonymous +app_update 730 +quit
         } -ArgumentList $SteamCMDPath
     }
     else {
-        & $SteamCMDPath +runscript cs2-updater.txt
+        & $SteamCMDPath +force_install_dir $ServerPath +login anonymous +app_update 730 +quit
+
     }
+
+    Write-Host "Update completed successfully." -ForegroundColor Green
 }
 
 function Start-PoshCS2-Server {

@@ -1,5 +1,5 @@
 # 1. Instalacja/Upgrade Servera
-- git pull https://github.com/fr0gM/srvx-cs2
+- git clone https://github.com/fr0gM/srvx-cs2
 - Import-Module .\resources\PoshCS2\PoshCS2.psm1 -Verbose
 - Update-PoshCS2-Server
 - Install-PoshCS2-ServerResources -Force
