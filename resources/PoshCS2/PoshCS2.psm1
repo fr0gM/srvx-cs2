@@ -72,7 +72,7 @@ function Install-PoshCS2-ServerResources {
     $MatchZyDownloadUrl = "https://github.com/shobhit-pathak/MatchZy/releases/download/0.8.15/MatchZy-0.8.15.zip"
 
     Write-Host "Checking directories..." -ForegroundColor Cyan
-    $CSGOPath = Join-Path $ServerPath "game\csgo" 
+    $CSGOPath = Join-Path $ServerPath "server\game\csgo" 
     $CSGOAddonsPath = Join-Path $CSGOPath "addons"
     $GameInfoPath = Join-Path $CSGOPath "gameinfo.gi"
 
@@ -149,19 +149,19 @@ function Install-PoshCS2-ServerResources {
     }
 
     Write-Host "Copy Server.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
-    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\server.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+    Copy-Item -Path "$ServerPath\resources\server.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "Server.cfg copied successfully." -ForegroundColor Green
 
     Write-Host "Copy config.cfg to path: $("$CSGOPath\cfg\MatchZy\")" -ForegroundColor Cyan
-    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\" -Force -Verbose
+    Copy-Item -Path "$ServerPath\resources\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\" -Force -Verbose
     Write-Host "config.cfg copied successfully." -ForegroundColor Green
  
     Write-Host "Copy secrets.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
-    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\secrets.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+    Copy-Item -Path "$ServerPath\resources\secrets.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "secrets.cfg copied successfully." -ForegroundColor Green
 
     Write-Host "Copy admins.json to path: $("$CSGOPath\addons\counterstrikesharp\configs\")" -ForegroundColor Cyan
-    Copy-Item -Path "$($script:PoshCS2Config.ServersJson.ServerPath)\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\" -Force -Verbose
+    Copy-Item -Path "$ServerPath\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\" -Force -Verbose
     Write-Host "admins.json copied successfully." -ForegroundColor Green
 
 }
