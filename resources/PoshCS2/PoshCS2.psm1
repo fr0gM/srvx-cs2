@@ -63,11 +63,15 @@ function Install-PoshCS2-ServerResources {
     )
     Test-PoshCS2Config
 
+    Write-Host "Checking directories..." -ForegroundColor Cyan
+    $CSGOPath = Join-Path $ServerPath "game\csgo" 
+    $CSGOAddonsPath = Join-Path $CSGOPath "addons"
+    $GameInfoPath = Join-Path $CSGOPath "gameinfo.gi"
     
     if ($ServerPath -eq "E:\CS2\relay") {
        
         Write-Host "Copy Relay.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
-        Copy-Item -Path "$($script:PoshCS2Config.Active.ResourcesPath)\relay.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+        Copy-Item -Path "$($script:PoshCS2Config.Active.ResourcesPath)\relay.cfg" -Destination "$CSGOPath\cfg\server.cfg" -Force -Verbose
         Write-Host "Relay.cfg copied successfully." -ForegroundColor Green
 
         Write-Host "Relay server does not require additional resources"
@@ -81,10 +85,7 @@ function Install-PoshCS2-ServerResources {
     $CounterStrikeSharpDownloadUrl = "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v1.0.362/counterstrikesharp-with-runtime-windows-1.0.362.zip"
     $MatchZyDownloadUrl = "https://github.com/shobhit-pathak/MatchZy/releases/download/0.8.15/MatchZy-0.8.15.zip"
 
-    Write-Host "Checking directories..." -ForegroundColor Cyan
-    $CSGOPath = Join-Path $ServerPath "game\csgo" 
-    $CSGOAddonsPath = Join-Path $CSGOPath "addons"
-    $GameInfoPath = Join-Path $CSGOPath "gameinfo.gi"
+   
 
     Write-Host "Installing Metamod" -ForegroundColor Cyan
     if (((Test-Path $CSGOAddonsPath\metamod) -and !$Force)) {
@@ -231,13 +232,17 @@ function Start-PoshCS2-Relay {
     Write-Host "Starting CSTV Relay Shield with isolated data folder..." -ForegroundColor Cyan
     Write-Host "Connecting to Main Server at $MainIP`:$MainTVPort" -ForegroundColor Yellow
 
-    # We use -netconport so you can RCON into the relay separately if needed
-    & $ServerPath -dedicated -notextmode -console `
-        -port $RelayPort `
-        +tv_port $RelayTVPort `
-        +tv_relay "$MainIP`:$MainTVPort" `
-        +exec relay.cfg    `
-        -nomemorycheck 
+
+    while ($true) {
+        Write-Host "--- Starting Relay Shield ---" -ForegroundColor Green
+        
+        # We use Start-Process -Wait so the loop "pauses" while the server is running.
+        # Once the server hits 'HLTVSTOP' and closes, the loop continues and restarts it.
+        Start-Process -FilePath $ServerPath -ArgumentList "-dedicated -notextmode -console -port $RelayPort +tv_port $RelayTVPort +tv_relay $MainIP`:$MainTVPort +exec server.cfg" -Wait
+
+        Write-Host "--- Relay Uplink lost or Demo-spike detected. Restarting in 4 seconds... ---" -ForegroundColor Yellow
+        Start-Sleep -Seconds 4
+    }
 
 }
 
