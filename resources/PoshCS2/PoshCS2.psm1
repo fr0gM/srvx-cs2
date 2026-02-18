@@ -58,11 +58,23 @@ function Test-PoshCS2Config {
 function Install-PoshCS2-ServerResources {
     param (
         [string]$ServerPath = $script:PoshCS2Config.Active.ServerPath,
+        [string]$ResourcesPath = $script:PoshCS2Config.Active.ResourcesPath,
         [switch]$Force
     )
     Test-PoshCS2Config
 
- 
+    
+    if ($ServerPath -eq "E:\CS2\relay") {
+       
+        Write-Host "Copy Relay.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
+        Copy-Item -Path "$($script:PoshCS2Config.Active.ResourcesPath)\relay.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+        Write-Host "Relay.cfg copied successfully." -ForegroundColor Green
+
+        Write-Host "Relay server does not require additional resources"
+
+        return
+    }
+
     $ErrorActionPreference = "Stop"
 
     $MetamodDownloadUrl = "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1384-windows.zip"
@@ -70,7 +82,7 @@ function Install-PoshCS2-ServerResources {
     $MatchZyDownloadUrl = "https://github.com/shobhit-pathak/MatchZy/releases/download/0.8.15/MatchZy-0.8.15.zip"
 
     Write-Host "Checking directories..." -ForegroundColor Cyan
-    $CSGOPath = Join-Path $ServerPath "server\game\csgo" 
+    $CSGOPath = Join-Path $ServerPath "game\csgo" 
     $CSGOAddonsPath = Join-Path $CSGOPath "addons"
     $GameInfoPath = Join-Path $CSGOPath "gameinfo.gi"
 
@@ -81,8 +93,8 @@ function Install-PoshCS2-ServerResources {
     }
     else {
         # Download and install metamod
-        Invoke-WebRequest $MetamodDownloadUrl -OutFile "$($script:PoshCS2Config.Active.ServerPath)\resources\metamod.zip"
-        Expand-Archive -Path "$($script:PoshCS2Config.Active.ServerPath)\resources\metamod.zip" -DestinationPath $CSGOPath -Force 
+        Invoke-WebRequest $MetamodDownloadUrl -OutFile "$($script:PoshCS2Config.Active.ResourcesPath)\metamod.zip"
+        Expand-Archive -Path "$($script:PoshCS2Config.Active.ResourcesPath)\metamod.zip" -DestinationPath $CSGOPath -Force 
         Write-Host "Metamod Installed" -ForegroundColor Green
     }
     
@@ -129,8 +141,8 @@ function Install-PoshCS2-ServerResources {
     }
     else {
         # Download and install counterstrikesharp
-        Invoke-WebRequest $CounterStrikeSharpDownloadUrl -OutFile E:\CS2\resources\cs2sharp-runtime.zip
-        Expand-Archive -Path E:\CS2\resources\cs2sharp-runtime.zip -DestinationPath $CSGOPath  -Force
+        Invoke-WebRequest $CounterStrikeSharpDownloadUrl -OutFile "$($script:PoshCS2Config.Active.ResourcesPath)\cs2sharp-runtime.zip"
+        Expand-Archive -Path "$($script:PoshCS2Config.Active.ResourcesPath)\cs2sharp-runtime.zip" -DestinationPath $CSGOPath  -Force
         Write-Host "CounterStrikeSharp Runtime Installed" -ForegroundColor Green
     }
 
@@ -141,25 +153,25 @@ function Install-PoshCS2-ServerResources {
     }
     else {
         # Download and install MatchZy
-        Invoke-WebRequest $MatchZyDownloadUrl -OutFile E:\CS2\resources\MatchZy.zip
-        Expand-Archive -Path E:\CS2\resources\MatchZy.zip -DestinationPath $CSGOPath -Force
+        Invoke-WebRequest $MatchZyDownloadUrl -OutFile "$($script:PoshCS2Config.Active.ResourcesPath)\MatchZy.zip"
+        Expand-Archive -Path "$($script:PoshCS2Config.Active.ResourcesPath)\MatchZy.zip" -DestinationPath $CSGOPath -Force
         Write-Host "MatchZy Installed" -ForegroundColor Green
     }
 
     Write-Host "Copy Server.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
-    Copy-Item -Path "$ServerPath\resources\server.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.Active.ResourcesPath)\server.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "Server.cfg copied successfully." -ForegroundColor Green
 
     Write-Host "Copy config.cfg to path: $("$CSGOPath\cfg\MatchZy\")" -ForegroundColor Cyan
-    Copy-Item -Path "$ServerPath\resources\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.Active.ResourcesPath)\config.cfg" -Destination "$CSGOPath\cfg\MatchZy\" -Force -Verbose
     Write-Host "config.cfg copied successfully." -ForegroundColor Green
  
     Write-Host "Copy secrets.cfg to path: $("$CSGOPath\cfg\")" -ForegroundColor Cyan
-    Copy-Item -Path "$ServerPath\resources\secrets.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.Active.ResourcesPath)\secrets.cfg" -Destination "$CSGOPath\cfg\" -Force -Verbose
     Write-Host "secrets.cfg copied successfully." -ForegroundColor Green
 
     Write-Host "Copy admins.json to path: $("$CSGOPath\addons\counterstrikesharp\configs\")" -ForegroundColor Cyan
-    Copy-Item -Path "$ServerPath\resources\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\" -Force -Verbose
+    Copy-Item -Path "$($script:PoshCS2Config.Active.ResourcesPath)\admins.json" -Destination "$CSGOPath\addons\counterstrikesharp\configs\" -Force -Verbose
     Write-Host "admins.json copied successfully." -ForegroundColor Green
 
 }
@@ -209,12 +221,11 @@ function Start-PoshCS2-Server {
 }
 function Start-PoshCS2-Relay {
     param (          
-        $ServerPath = "E:\CS2\server\game\bin\win64\cs2.exe",
+        $ServerPath = "E:\CS2\relay\game\bin\win64\cs2.exe",
         $MainIP = "127.0.0.1", # The IP of your Match Server
         $MainTVPort = 27020,   # The TV Port of your Match Server
         $RelayPort = 27016,    # Different from 27015
-        $RelayTVPort = 27021,   # Different from 27020
-        $DataFolder = "E:\CS2\relay_data"
+        $RelayTVPort = 27021  # Different from 27020
     )
 
     Write-Host "Starting CSTV Relay Shield with isolated data folder..." -ForegroundColor Cyan
@@ -225,10 +236,9 @@ function Start-PoshCS2-Relay {
         -port $RelayPort `
         +tv_port $RelayTVPort `
         +tv_relay "$MainIP`:$MainTVPort" `
-        -dedicated_basefolder $DataFolder `
-        +exec relay `
-        -nomemorycheck `
-        -nomods 
+        +exec relay.cfg    `
+        -nomemorycheck 
+
 }
 
 function Stop-PoshCS2-Server {
@@ -275,7 +285,7 @@ function Get-PoshCS2-RconProfile {
         [validateset("default", "lan-pc2")]
         [string]$Target = "default"
     )
-    $ConfFile = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
+    $ConfFile = Get-Content "$($script:PoshCS2Config.Active.RconConfigPath)" | ConvertFrom-Json
     $RconProfile = $ConfFile.$Target
     if (-not $RconProfile) {
         $AvailableProfiles = ($ConfFile.PSObject.Properties | Select-Object -ExpandProperty Name) -join ', '
@@ -295,7 +305,7 @@ function Send-PoshCS2-Command {
         [string]$Address = $null,
         [PSCredential]$Password = $null 
     )
-    $ConfFile = Get-Content "$($script:PoshCS2Config.Active.ServerPath)\resources\rcon.json" | ConvertFrom-Json
+    $ConfFile = Get-Content "$($script:PoshCS2Config.Active.RconConfigPath)" | ConvertFrom-Json
     $RconProfile = $ConfFile.$Target
     if (-not $RconProfile) {
         $AvailableProfiles = ($ConfFile.PSObject.Properties | Select-Object -ExpandProperty Name) -join ', '
@@ -414,7 +424,7 @@ function Get-PoshCS2-RoundBackups {
         [validateset("default", "lan-pc2")]
         [string]$Target = "default"
     )   
-    return (Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\server\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name)
+    return (Get-ChildItem "$($script:PoshCS2Config.Active.ServerPath)\game\csgo\MatchZyDataBackup\*" | Select-Object -ExpandProperty Name)
 }
 
 function Restore-PoshCS2-Round {
@@ -424,7 +434,7 @@ function Restore-PoshCS2-Round {
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
                 $serverPath = $script:PoshCS2Config.Active.ServerPath
                 if (-not $serverPath) { $serverPath = "E:\CS2" }
-                $searchPath = Join-Path $serverPath "server\game\csgo\MatchZyDataBackup\*"
+                $searchPath = Join-Path $serverPath "game\csgo\MatchZyDataBackup\*"
                 Get-ChildItem -Path $searchPath | Where-Object { $_.Name -like "$wordToComplete*" } | Select-Object -ExpandProperty Name
             })]
         [string]$BackupFile,
