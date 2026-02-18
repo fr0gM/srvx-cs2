@@ -10,14 +10,12 @@ function Import-PoshCS2-Variables {
         [Parameter(Position = 0)]
         [ArgumentCompleter({
                 param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
-            
                 $path = $script:PoshCS2Config.ServersJsonPath
                 if (Test-Path $path) {
                     $json = Get-Content -Raw -Path $path | ConvertFrom-Json
                     $json.psobject.properties.name | Where-Object { $_ -like "$wordToComplete*" }
                 }
             })]$Name,
-
         [string]$ServersJsonPath = $script:PoshCS2Config.ServersJsonPath
     )
     
@@ -209,6 +207,30 @@ function Start-PoshCS2-Server {
     Start-Sleep -Seconds 5
     Get-PoshCS2-Status
 }
+function Start-PoshCS2-Relay {
+    param (          
+        $ServerPath = "E:\CS2\server\game\bin\win64\cs2.exe",
+        $MainIP = "127.0.0.1", # The IP of your Match Server
+        $MainTVPort = 27020,   # The TV Port of your Match Server
+        $RelayPort = 27016,    # Different from 27015
+        $RelayTVPort = 27021,   # Different from 27020
+        $DataFolder = "E:\CS2\relay_data"
+    )
+
+    Write-Host "Starting CSTV Relay Shield with isolated data folder..." -ForegroundColor Cyan
+    Write-Host "Connecting to Main Server at $MainIP`:$MainTVPort" -ForegroundColor Yellow
+
+    # We use -netconport so you can RCON into the relay separately if needed
+    & $ServerPath -dedicated -notextmode -console `
+        -port $RelayPort `
+        +tv_port $RelayTVPort `
+        +tv_relay "$MainIP`:$MainTVPort" `
+        -dedicated_basefolder $DataFolder `
+        +exec relay `
+        -nomemorycheck `
+        -nomods 
+}
+
 function Stop-PoshCS2-Server {
     param (
         [string]$ComputerName = $null

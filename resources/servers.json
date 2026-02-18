@@ -1,0 +1,20 @@
+{
+  "local": {
+    "ServerPath": "E:\\CS2",
+    "SteamCMDPath": "E:\\CS2\\steamcmd\\steamcmd.exe",
+    "ServerExecutablePath": "E:\\CS2\\server\\game\\bin\\win64\\cs2.exe",
+    "RconPath": "E:\\CS2\\resources\\rcon.exe"
+  }, 
+  "local-relay": {
+    "ServerPath": "E:\\CS2\\relay",
+    "SteamCMDPath": "E:\\CS2\\steamcmd\\steamcmd.exe",
+    "ServerExecutablePath": "E:\\CS2\\relay\\server\\game\\bin\\win64\\cs2.exe",
+    "RconPath": "E:\\CS2\\resources\\rcon.exe"
+  },
+  "lan-PC": {
+    "ServerPath": "E:\\CS2",
+    "SteamCMDPath": "E:\\CS2\\steamcmd\\steamcmd.exe",
+    "ServerExecutablePath": "E:\\CS2\\server\\game\\bin\\win64\\cs2.exe",
+    "RconPath": "E:\\CS2\\resources\\rcon.exe"
+  }
+}

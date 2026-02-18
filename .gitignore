@@ -1,15 +1,17 @@
 .gitignore
 
+relay/*
 server/*
 steamcmd/*
 resources/*
 
-
 !/server/game/csgo/mecz.json
 !/resources/PoshCS2
 !/resources/server.cfg
+!/resources/relay.cfg
 !/resources/config.cfg
 !/resources/admins.json
+!/resources/servers.json
 !/resources/secrets-example.cfg
 !/resources/rcon-example.json
 !/resources/mecz-example.json
