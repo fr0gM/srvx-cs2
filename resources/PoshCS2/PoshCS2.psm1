@@ -234,14 +234,15 @@ function Start-PoshCS2-Relay {
 
 
     while ($true) {
+    
         Write-Host "--- Starting Relay Shield ---" -ForegroundColor Green
         
         # We use Start-Process -Wait so the loop "pauses" while the server is running.
         # Once the server hits 'HLTVSTOP' and closes, the loop continues and restarts it.
         Start-Process -FilePath $ServerPath -ArgumentList "-dedicated -notextmode -console -port $RelayPort +tv_port $RelayTVPort +tv_relay $MainIP`:$MainTVPort +exec server.cfg" -Wait
 
-        Write-Host "--- Relay Uplink lost or Demo-spike detected. Restarting in 4 seconds... ---" -ForegroundColor Yellow
-        Start-Sleep -Seconds 4
+        Write-Host "--- Relay Uplink lost. Restarting in 15 seconds... ---" -ForegroundColor Yellow
+        Start-Sleep -Seconds 15
     }
 
 }
