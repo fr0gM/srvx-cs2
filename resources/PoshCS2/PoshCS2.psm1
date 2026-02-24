@@ -1,6 +1,6 @@
 ﻿$script:PoshCS2Config = @{
-    ServersJsonPath = 'E:\CS2\resources\servers.json'
-    RconJsonPath    = 'E:\CS2\resources\rcon.json'
+    ServersJsonPath = "$((Get-Location).Path)\resources\servers.json"
+    RconJsonPath    = "$((Get-Location).Path)\resources\rcon.json"
     ServersJson     = $null
     Active          = $null
 }
@@ -215,7 +215,7 @@ function Start-PoshCS2-Server {
         } -ArgumentList $ServerPath, $Port, $TVPort, $Map, $LogFile, $MaxPlayers
     }
     else {
-        & $ServerPath -dedicated -usercon -console -port $Port +tv_port $TVPort +map $Map +sv_logfile $LogFile -maxplayers $MaxPlayers
+        & $ServerPath -dedicated -usercon -port $Port +tv_port $TVPort +map $Map +sv_logfile $LogFile -maxplayers $MaxPlayers 
     }
     Start-Sleep -Seconds 5
     Get-PoshCS2-Status
@@ -223,7 +223,7 @@ function Start-PoshCS2-Server {
 function Start-PoshCS2-Relay {
     param (          
         $ServerPath = "E:\CS2\relay\game\bin\win64\cs2.exe",
-        $MainIP = "127.0.0.1", # The IP of your Match Server
+        $MainIP = "192.168.1.21", # The IP of your Match Server
         $MainTVPort = 27020,   # The TV Port of your Match Server
         $RelayPort = 27016,    # Different from 27015
         $RelayTVPort = 27021  # Different from 27020
@@ -239,7 +239,7 @@ function Start-PoshCS2-Relay {
         
         # We use Start-Process -Wait so the loop "pauses" while the server is running.
         # Once the server hits 'HLTVSTOP' and closes, the loop continues and restarts it.
-        Start-Process -FilePath $ServerPath -ArgumentList "-dedicated -notextmode -console -port $RelayPort +tv_port $RelayTVPort +tv_relay $MainIP`:$MainTVPort +exec server.cfg" -Wait
+        Start-Process -FilePath $ServerPath -ArgumentList "-dedicated -notextmode -console -port $RelayPort +tv_port $RelayTVPort +tv_relay $MainIP`:$MainTVPort +sv_lan 1 " -Wait
 
         Write-Host "--- Relay Uplink lost. Restarting in 15 seconds... ---" -ForegroundColor Yellow
         Start-Sleep -Seconds 15
